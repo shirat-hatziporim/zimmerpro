@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZimmerPro — התאמת מערכת</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --dark:#0d0d0d;
+  --gold:#c8a97e;
+  --gold-light:#e8c99e;
+  --cream:#f7f3ed;
+  --text:#1a1a1a;
+  --muted:#6b6560;
+  --border:#e5e0d8;
+}
+body{
+  font-family:'Heebo',sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  min-height:100vh;
+}
+header{
+  background:var(--dark);
+  padding:1.25rem 2rem;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+header span{
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:20px;
+  color:#fff;
+  font-weight:700;
+}
+header .gold{color:var(--gold);}
+.hero-bar{
+  background:linear-gradient(135deg,#1a1208,#0d0d0d);
+  padding:2.5rem 2rem;
+  text-align:center;
+}
+.hero-bar h1{
+  font-family:'Frank Ruhl Libre',serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:900;
+  color:#fff;
+  margin-bottom:0.5rem;
+}
+.hero-bar h1 span{color:var(--gold);}
+.hero-bar p{color:rgba(255,255,255,0.5);font-size:15px;}
+.main{
+  max-width:780px;
+  margin:0 auto;
+  padding:2rem 1.5rem 4rem;
+}
+.step{
+  background:#fff;
+  border-radius:16px;
+  border:1px solid var(--border);
+  padding:1.75rem;
+  margin-bottom:1.25rem;
+}
+.step-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:1.25rem;
+}
+.step-num{
+  width:32px;height:32px;
+  background:var(--dark);
+  color:var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:800;
+  flex-shrink:0;
+}
+.step-title{font-size:16px;font-weight:800;}
+.step-sub{font-size:13px;color:var(--muted);margin-top:2px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid-1{display:grid;gap:12px;}
+label{
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+input,select{
+  width:100%;
+  padding:10px 14px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  font-size:14px;
+  font-family:'Heebo',sans-serif;
+  background:#fff;
+  color:var(--text);
+  transition:border-color 0.2s;
+  outline:none;
+}
+input:focus,select:focus{border-color:var(--gold);}
+input[dir="ltr"]{direction:ltr;text-align:left;}
+.hint{font-size:11px;color:var(--muted);margin-top:4px;}
+
+.status-box{
+  display:none;
+  padding:12px 16px;
+  border-radius:10px;
+  font-size:14px;
+  margin-bottom:1.25rem;
+  font-weight:600;
+}
+.status-box.success{
+  background:#edf7ed;
+  color:#2e7d32;
+  border:1px solid #c8e6c9;
+}
+.status-box.error{
+  background:#fdecea;
+  color:#c62828;
+  border:1px solid #ffcdd2;
+}
+.status-box.loading{
+  background:#fff8e1;
+  color:#b45000;
+  border:1px solid #ffe0b2;
+}
+
+.btn-generate{
+  width:100%;
+  padding:16px;
+  background:var(--dark);
+  color:var(--gold);
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:800;
+  font-family:'Heebo',sans-serif;
+  cursor:pointer;
+  transition:all 0.2s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.btn-generate:hover{background:#1a1a1a;transform:translateY(-2px);}
+.btn-generate:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+.note{
+  background:rgba(200,169,126,0.08);
+  border:1px solid rgba(200,169,126,0.25);
+  border-radius:10px;
+  padding:12px 16px;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:1.25rem;
+  line-height:1.6;
+}
+.note strong{color:var(--text);}
+
+@media(max-width:560px){
+  .grid-2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span>Zimmer<span class="gold">Pro</span> — כלי התאמה</span>
+</header>
+
+<div class="hero-bar">
+  <h1>בנה את <span>המערכת שלך</span></h1>
+  <p>מלא את הפרטים וקבל קובץ HTML מוכן להעלאה</p>
+</div>
+
+<div class="main">
+
+  <div class="note">
+    <strong>איך זה עובד:</strong> מלא את הפרטים למטה, לחץ "צור קובץ" — והקובץ יורד אוטומטית.
+    לאחר ההורדה, העלה אותו ל-GitHub Pages כ-<strong>index.html</strong> ועדכן את ה-Apps Script.
+  </div>
+
+  <div id="statusBox" class="status-box"></div>
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">פרטי הצימר</div>
+        <div class="step-sub">המידע שיופיע בממשק ובהודעות</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label>שם הצימר *</label>
+        <input id="name" type="text" placeholder='למשל: צימר "גן עדן"'>
+      </div>
+      <div>
+        <label>טלפון בעל הצימר *</label>
+        <input id="phone" type="text" placeholder="050-0000000">
+      </div>
+      <div>
+        <label>כתובת הצימר</label>
+        <input id="address" type="text" placeholder="רחוב, עיר">
+      </div>
+      <div>
+        <label>מייל הצימר</label>
+        <input id="email" type="email" placeholder="zimmer@gmail.com" dir="ltr">
+      </div>
+      <div style="grid-column:1/-1;">
+        <label>קישור לוגו (URL של תמונה)</label>
+        <input id="logo" type="text" placeholder="https://..." dir="ltr">
+        <div class="hint">העלה את הלוגו ל-GitHub ושים כאן את הכתובת</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">מחירים</div>
+        <div class="step-sub">ניתן לשנות בהמשך דרך הממשק</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label>אמצע שבוע (₪ ללילה)</label>
+        <input id="price_week" type="number" placeholder="800">
+      </div>
+      <div>
+        <label>סוף שבוע שישי-שבת (₪)</label>
+        <input id="price_weekend" type="number" placeholder="1200">
+      </div>
+      <div>
+        <label>חבילת חמישי+שישי+שבת (₪)</label>
+        <input id="price_package" type="number" placeholder="1700">
+      </div>
+      <div>
+        <label>תוספת יציאה ראשון (₪)</label>
+        <input id="price_sunday" type="number" placeholder="350">
+      </div>
+      <div>
+        <label>תוספת אורח נוסף (₪)</label>
+        <input id="price_guest" type="number" placeholder="300">
+      </div>
+      <div>
+        <label>סיסמה למערכת</label>
+        <input id="password" type="text" placeholder="1234">
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">חיבור Google Sheets</div>
+        <div class="step-sub">נדרש להגדרת Google Sheets ו-Apps Script חדשים</div>
+      </div>
+    </div>
+    <div class="grid-1">
+      <div>
+        <label>Google Sheet ID *</label>
+        <input id="sheet_id" type="text" placeholder="1abc123...xyz" dir="ltr" style="font-family:monospace;font-size:13px;">
+        <div class="hint">מתוך הURL של הגיליון: docs.google.com/spreadsheets/d/<strong>[זה הID]</strong>/edit</div>
+      </div>
+      <div>
+        <label>Apps Script URL *</label>
+        <input id="script_url" type="text" placeholder="https://script.google.com/macros/s/.../exec" dir="ltr" style="font-family:monospace;font-size:13px;">
+        <div class="hint">ה-URL שמתקבל לאחר Deploy ב-Apps Script</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-generate" onclick="generate()" id="genBtn">
+    ⬇ צור קובץ HTML מותאם
+  </button>
+
+</div>
+
+<script>
+function showStatus(msg, type){
+  const el = document.getElementById('statusBox');
+  el.className = 'status-box ' + type;
+  el.style.display = 'block';
+  el.textContent = msg;
+  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function hideStatus(){
+  document.getElementById('statusBox').style.display = 'none';
+}
+
+function val(id){ return document.getElementById(id).value.trim(); }
+
+async function generate(){
+  hideStatus();
+  const name = val('name');
+  const phone = val('phone');
+  const sheetId = val('sheet_id');
+  const scriptUrl = val('script_url');
+
+  if(!name){ showStatus('⚠️ נא להזין שם צימר', 'error'); return; }
+  if(!phone){ showStatus('⚠️ נא להזין טלפון', 'error'); return; }
+  if(!sheetId){ showStatus('⚠️ נא להזין Google Sheet ID', 'error'); return; }
+  if(!scriptUrl){ showStatus('⚠️ נא להזין Apps Script URL', 'error'); return; }
+
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ מוריד ומעבד...';
+  showStatus('מוריד את קובץ הבסיס מ-GitHub...', 'loading');
+
+  try {
+    const res = await fetch('https://shirat-hatziporim.github.io/shirat-hatziporim/shirat-hatziporim.html');
+    if(!res.ok) throw new Error('לא ניתן להוריד את קובץ הבסיס');
+    let html = await res.text();
+
+    showStatus('מתאים את הקובץ לפרטים שלך...', 'loading');
+
+    const address = val('address') || 'נחל קדם 93, מיצד';
+    const email = val('email') || 'shirathatziporim@gmail.com';
+    const logo = val('logo') || 'https://shirat-hatziporim.github.io/shirat-hatziporim/logo.jpeg';
+    const pw = val('password') || '0000';
+    const priceWeek = val('price_week') || '800';
+    const priceWeekend = val('price_weekend') || '1200';
+    const pricePackage = val('price_package') || '1700';
+    const priceSunday = val('price_sunday') || '350';
+    const priceGuest = val('price_guest') || '300';
+
+    // שם צימר
+    html = html.replace(/שירת הציפורים/g, name);
+
+    // טלפון
+    const phoneClean = phone.replace(/-/g,'');
+    html = html.replace(/050-4103353/g, phone);
+    html = html.replace(/0504103353/g, phoneClean);
+    html = html.replace(/050-410-3353/g, phone);
+
+    // כתובת
+    html = html.replace(/נחל קדם 93, מיצד/g, address);
+
+    // מייל
+    html = html.replace(/shirathatziporim@gmail\.com/g, email);
+
+    // לוגו
+    html = html.replace(/https:\/\/shirat-hatziporim\.github\.io\/shirat-hatziporim\/logo\.jpeg/g, logo);
+
+    // Sheet ID
+    html = html.replace(/1b_40U_bCUs-MXz0K5XuLuEmD-HjYhh9TivMTEkerMdk/g, sheetId);
+
+    // Script URL
+    const scriptKey = scriptUrl.replace('https://script.google.com/macros/s/','').replace('/exec','');
+    html = html.replace(/AKfycbyKUvfneAaQwRYiQ67xvzfBQH0CTnoUfOuX3QgfUpOXoEaKUCRhjx5jEytDCYAeLX1N/g, scriptKey);
+
+    // סיסמה
+    html = html.replace(/const PASSWORD="[^"]*"/, `const PASSWORD="${pw}"`);
+
+    // מחירים
+    html = html.replace(/price_weekday:\s*\d+/, `price_weekday: ${priceWeek}`);
+    html = html.replace(/price_weekend:\s*\d+/, `price_weekend: ${priceWeekend}`);
+    html = html.replace(/price_package:\s*\d+/, `price_package: ${pricePackage}`);
+    html = html.replace(/price_sunday:\s*\d+/, `price_sunday: ${priceSunday}`);
+    html = html.replace(/price_extra_guest:\s*\d+/, `price_extra_guest: ${priceGuest}`);
+
+    // הורדה
+    const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const safeName = name.replace(/["']/g,'').replace(/\s+/g,'-');
+    a.href = url;
+    a.download = `zimmer-${safeName}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showStatus('✅ הקובץ הורד בהצלחה! העלה אותו ל-GitHub Pages כ-index.html', 'success');
+  } catch(e) {
+    showStatus('❌ שגיאה: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⬇ צור קובץ HTML מותאם';
+  }
+}
+</script>
+</body>
+</html>
